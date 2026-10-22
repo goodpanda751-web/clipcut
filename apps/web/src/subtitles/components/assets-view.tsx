@@ -16,8 +16,13 @@ import { TRANSCRIPTION_LANGUAGES } from "@/transcription/supported-languages";
 import type {
 	CaptionChunk,
 	TranscriptionLanguage,
+	TranscriptionModelId,
 	TranscriptionProgress,
 } from "@/transcription/types";
+import {
+	DEFAULT_TRANSCRIPTION_MODEL,
+	TRANSCRIPTION_MODELS,
+} from "@/transcription/models";
 import { transcriptionService } from "@/services/transcription/service";
 import { decodeAudioToFloat32 } from "@/media/audio";
 import { buildCaptionChunks } from "@/transcription/caption";
@@ -86,6 +91,9 @@ function processingReducer(
 export function Captions() {
 	const [selectedLanguage, setSelectedLanguage] =
 		useState<TranscriptionLanguage>("auto");
+	const [selectedModel, setSelectedModel] = useState<TranscriptionModelId>(
+		DEFAULT_TRANSCRIPTION_MODEL,
+	);
 	const [processing, dispatch] = useReducer(processingReducer, IDLE_STATE);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -135,6 +143,7 @@ export function Captions() {
 			const result = await transcriptionService.transcribe({
 				audioData: samples,
 				language: selectedLanguage === "auto" ? undefined : selectedLanguage,
+				modelId: selectedModel,
 				onProgress: handleProgress,
 			});
 
@@ -302,6 +311,28 @@ export function Captions() {
 									{TRANSCRIPTION_LANGUAGES.map((language) => (
 										<SelectItem key={language.code} value={language.code}>
 											{language.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</SectionField>
+						<SectionField label="Model">
+							<Select
+								value={selectedModel}
+								onValueChange={(value) => {
+									const matched = TRANSCRIPTION_MODELS.find(
+										(model) => model.id === value,
+									);
+									if (matched) setSelectedModel(matched.id);
+								}}
+							>
+								<SelectTrigger>
+									<SelectValue placeholder="Select a model" />
+								</SelectTrigger>
+								<SelectContent>
+									{TRANSCRIPTION_MODELS.map((model) => (
+										<SelectItem key={model.id} value={model.id}>
+											{model.name} — {model.description}
 										</SelectItem>
 									))}
 								</SelectContent>

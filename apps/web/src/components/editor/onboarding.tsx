@@ -28,7 +28,7 @@ export function Onboarding() {
 	const getStepTitle = () => {
 		switch (step) {
 			case 0:
-				return "Welcome to OpenCut Beta! 🎉";
+				return "Welcome to ClipCut! 🎉";
 			case 1:
 				return "⚠️ This is a super early beta!";
 			case 2:
@@ -44,7 +44,7 @@ export function Onboarding() {
 				return (
 					<div className="space-y-5">
 						<div className="space-y-3">
-							<Title title="Welcome to OpenCut Beta! 🎉" />
+							<Title title="Welcome to ClipCut! 🎉" />
 							<Description description="You're among the first to try OpenCut - the fully open source CapCut alternative." />
 						</div>
 						<NextButton onClick={handleNext}>Next</NextButton>

@@ -29,3 +29,8 @@ web-sys = { version = "0.3.93", features = ["OffscreenCanvas", "HtmlCanvasElemen
 [features]
 default = ["wasm"]
 wasm = []
+
+# ClipCut: wasm-opt (binaryen) is disabled so local builds do not need to
+# download binaryen; the unoptimised output is fine for local testing.
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false

@@ -1,9 +1,9 @@
 export const SITE_URL = "https://opencut.app";
 
 export const SITE_INFO = {
-	title: "OpenCut",
+	title: "ClipCut",
 	description:
-		"A simple but powerful video editor that gets the job done. In your browser.",
+		"ClipCut — a CapCut-style video editor with Pro features, free in your browser. Based on OpenCut (MIT).",
 	url: SITE_URL,
 	openGraphImage: "/open-graph/default.jpg",
 	twitterImage: "/open-graph/default.jpg",
